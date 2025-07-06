@@ -5,6 +5,8 @@ import java.time.Instant;
 
 public class Mesaj implements Serializable {
 
+    private static final long serialVersionUID = 1L;
+
     private String continut;
 
     private String expeditor;
