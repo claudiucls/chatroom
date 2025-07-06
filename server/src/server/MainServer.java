@@ -15,22 +15,23 @@ public class MainServer {
     private static ReentrantReadWriteLock lock = new ReentrantReadWriteLock();
 
     public static void main(String[] args) throws IOException {
-        ServerSocket ss = new ServerSocket(4545);
+        try (ServerSocket ss = new ServerSocket(4545)) {
 
-        while(true){
-            Socket clientSocket = ss.accept();
-            ClientThread clientThread = new ClientThread(clientSocket);
-            clientThread.start();
+            while (true) {
+                Socket clientSocket = ss.accept();
+                ClientThread clientThread = new ClientThread(clientSocket);
+                clientThread.start();
 
-            try {
-                lock.writeLock().lock();
-                clienti.add(clientThread);
-            } catch (Exception e) {
-                throw new RuntimeException(e);
-            } finally {
-                lock.writeLock().unlock();
+                try {
+                    lock.writeLock().lock();
+                    clienti.add(clientThread);
+                } catch (Exception e) {
+                    throw new RuntimeException(e);
+                } finally {
+                    lock.writeLock().unlock();
+                }
+
             }
-
         }
     }
 

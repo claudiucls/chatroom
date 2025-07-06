@@ -34,4 +34,17 @@ public class Mesaj implements Serializable {
     public void setTimestamp(Instant timestamp) {
         this.timestamp = timestamp;
     }
+
+    @Override
+    public String toString() {
+        return getExpeditor()+": "+getContinut()+" ("+getTimestamp()+")";
+    }
+
+    public static Mesaj of(String expeditor, String continut){
+        Mesaj mesaj = new Mesaj();
+        mesaj.setContinut(continut);
+        mesaj.setExpeditor(expeditor);
+        mesaj.setTimestamp(Instant.now());
+        return mesaj;
+    }
 }
